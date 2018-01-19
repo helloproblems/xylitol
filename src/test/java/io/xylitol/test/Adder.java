@@ -6,9 +6,14 @@ package io.xylitol.test;
  * @author xuyandong
  */
 public class Adder {
-    public static void main(String[] args) {
-
-    }
+//    public static void main(String[] args) {
+//        new Adder().add(3 * 1000, 1, 2).addListener(new GenericXFutureListener<XFuture<? super Integer>>() {
+//            @Override
+//            public void operationComplete(XFuture<? super Integer> future) throws Exception {
+//                System.out.print(future.get());
+//            }
+//        });
+//    }
 
 
     public AdditionTestFuture add(long delay, int a, int b) {
