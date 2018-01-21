@@ -22,10 +22,8 @@ public class Adder {
 
         TaskFunction taskFunction = new TaskFunction();
 
-
         taskFunction.offerFunction(taskFunctionClass1);
         taskFunction.offerFunction(taskFunctionClass2);
-
 
         taskFunction.work();
 
