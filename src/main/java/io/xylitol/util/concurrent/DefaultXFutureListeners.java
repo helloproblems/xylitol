@@ -24,7 +24,7 @@ public class DefaultXFutureListeners {
     public void add(GenericXFutureListener<? extends XFuture<?>> l) {
         GenericXFutureListener[] listeners = this.listeners;
         final int size = this.size;
-        if (size == listeners.length) {
+        if (size == listeners.length) {//如果数组到达最大阈值 就对数组进行扩容 放大至2倍
             this.listeners = listeners = Arrays.copyOf(listeners, size << 1);
         }
         listeners[size] = l;
@@ -39,6 +39,7 @@ public class DefaultXFutureListeners {
         for (int i = 0; i < size; i++) {
             if (listeners[i] == l) {
                 int listenersToMove = size - i - 1;
+                //数组前移并清空最后一个数组成员
                 if (listenersToMove > 0) {
                     System.arraycopy(listeners, i + 1, listeners, i, listenersToMove);
                 }
