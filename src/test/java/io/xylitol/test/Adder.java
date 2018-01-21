@@ -1,20 +1,33 @@
 package io.xylitol.test;
 
+
 /**
  * Created on 2018/1/19.
  *
  * @author xuyandong
  */
 public class Adder {
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
+
+        TaskFunctionClass taskFunctionClass = new TaskFunctionClass(Adder.class, "add", new Object[]{1, 2}, new DefaultTaskInstance<Adder>());
+
+        TaskFunction taskFunction = new TaskFunction();
+
+
+        taskFunction.offerFunction(taskFunctionClass);
+
+        taskFunction.work();
 //        new Adder().add(3 * 1000, 1, 2).addListener(new GenericXFutureListener<XFuture<? super Integer>>() {
 //            @Override
 //            public void operationComplete(XFuture<? super Integer> future) throws Exception {
 //                System.out.print(future.get());
 //            }
 //        });
-//    }
+    }
 
+    public int add(int a, int b) {
+        return a + b;
+    }
 
     public AdditionTestFuture add(long delay, int a, int b) {
         AdditionTestFuture future = new AdditionTestFuture();

@@ -25,7 +25,7 @@ public class DefaultPromise<V> extends AbstractXFuture<V> implements Promise<V> 
 
     private Object listeners;
 
-    private short waiters;//线程等待数量
+    private volatile short waiters;//线程等待数量
 
     private final static short WAITERS_MAX = Short.MAX_VALUE;
 
