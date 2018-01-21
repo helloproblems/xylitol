@@ -29,6 +29,7 @@ public abstract class AbstractXFuture<V> implements XFuture<V> {
         if (cause == null) {
             return getNow();
         }
+        //中断异常
         if (cause instanceof CancellationException) {
             throw (CancellationException) cause;
         }
@@ -52,6 +53,7 @@ public abstract class AbstractXFuture<V> implements XFuture<V> {
             if (cause == null) {
                 return getNow();
             }
+            //中断异常
             if (cause instanceof CancellationException) {
                 throw (CancellationException) cause;
             }

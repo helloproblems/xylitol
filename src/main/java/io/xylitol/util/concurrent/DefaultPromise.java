@@ -338,6 +338,7 @@ public class DefaultPromise<V> extends AbstractXFuture<V> implements Promise<V> 
             return isDone();
         }
 
+        //返回线程的上次的中断状态，并清除中断状态 并抛出中断异常
         if (Thread.interrupted()) {
             throw new InterruptedException();
         }
@@ -356,6 +357,7 @@ public class DefaultPromise<V> extends AbstractXFuture<V> implements Promise<V> 
                     try {
                         wait(waitTime / 1000000, (int) (waitTime % 1000000));
                     } catch (InterruptedException e) {
+                        //说明线程已经被中断
                         interrupted = true;
                     } finally {
                         decWaiters();
