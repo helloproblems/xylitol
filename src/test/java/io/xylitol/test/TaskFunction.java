@@ -50,22 +50,19 @@ public class TaskFunction {
                 }
 
                 try {
-                    int result = 0;
+                    Object result;
                     try {
 
 
-//                    try {
                         TaskInstance taskInstance = taskFunctionClass.getTaskInstance();
-                        result = (int) method.invoke(taskInstance.getInstance(taskFunctionClass.getClazz()), taskFunctionClass.getArgs());
-//                        result = (int) method.invoke(taskFunctionClass.getClazz().newInstance(), taskFunctionClass.getArgs());
-//                    } catch (InstantiationException e) {
-//                        e.printStackTrace();
-//                    }
+                        result = method.invoke(taskInstance.getInstance(taskFunctionClass.getClazz()), taskFunctionClass.getArgs());
+
+                        taskFunctionClass.getPromise().setSuccess(result);
+//
                     } catch (InvocationTargetException e) {
                         //TODO
                         e.printStackTrace();
                     }
-                    System.out.print(result);
                 } catch (IllegalAccessException e) {
                     //TODO
                     e.printStackTrace();
