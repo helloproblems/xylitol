@@ -15,7 +15,7 @@ import static io.xylitol.util.internal.ObjectUtil.classTypeEquals;
  *
  * @author xuyandong
  */
-public class TaskQueueHandler implements TaskHandler {
+public class TaskQueueHandler extends AbstractTaskHandler {
 
     private BlockingQueue<TaskContext> taskBlockingQueue;
 
@@ -73,26 +73,8 @@ public class TaskQueueHandler implements TaskHandler {
 
     @Override
     public void exceptionCaught(TaskContext ctx, Throwable cause) throws Exception {
-
-
+        //TODO
     }
 
-    /**
-     * 在所有方法中筛选出需要执行的方法
-     *
-     * @param taskContext
-     */
-    private Method getMethod(TaskContext taskContext) throws NoSuchMethodException {
 
-        Method[] methods = taskContext.getClazz().getDeclaredMethods();
-
-        for (Method method : methods) {
-            //TODO 筛选还不健全 需要确认的有:方法名、参数个数、 参数一一对应, 目前参数一一对应没有处理
-            if (method.getName().equals(taskContext.getMethodName()) && method.getParameterCount() == (taskContext.getArgs().length)) {
-                return method;
-            }
-
-        }
-        throw new NoSuchMethodException();
-    }
 }

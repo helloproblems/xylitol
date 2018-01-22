@@ -29,6 +29,10 @@ public class Adder {
         return a + b;
     }
 
+    public long add(int a, long b) {
+        return a + b;
+    }
+
     public int multiply(int a, int b) {
         return a * b;
     }
