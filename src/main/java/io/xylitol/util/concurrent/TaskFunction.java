@@ -1,10 +1,14 @@
 package io.xylitol.util.concurrent;
 
 
+import io.xylitol.util.exception.ReturnTypeInconsistentException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import static io.xylitol.util.internal.ObjectUtil.classTypeEquals;
 
 /**
  * Created on 2018/1/21.
@@ -13,9 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class TaskFunction {
 
-
     private BlockingQueue<TaskFunctionClass> classBlockingDeque;
-
 
     public TaskFunction() {
         this.classBlockingDeque = new LinkedBlockingQueue<>(Short.MAX_VALUE);
@@ -38,32 +40,29 @@ public class TaskFunction {
     public void work() {
         for (; ; ) {
             TaskFunctionClass taskFunctionClass;
+            Method method = null;
+            Object result = null;
             try {
                 taskFunctionClass = classBlockingDeque.take();
+                method = getMethod(taskFunctionClass.getClazz(), taskFunctionClass);
+                TaskInstance taskInstance = taskFunctionClass.getTaskInstance();
+                result = method.invoke(taskInstance.getInstance(taskFunctionClass.getClazz()), taskFunctionClass.getArgs());
 
-                Method method = null;
-                try {
-                    method = getMethod(taskFunctionClass.getClazz(), taskFunctionClass);
-                } catch (NoSuchMethodException e) {
-                    //TODO
-                    e.printStackTrace();
+                if (classTypeEquals(result.getClass(), method.getReturnType())) {
+                    taskFunctionClass.setValue(result);
                 }
+                throw new ReturnTypeInconsistentException();
 
-                try {
-                    int result = 0;
-                    try {
-                        TaskInstance taskInstance = taskFunctionClass.getTaskInstance();
-                        result = (int) method.invoke(taskInstance.getInstance(taskFunctionClass.getClazz()), taskFunctionClass.getArgs());
-                    } catch (InvocationTargetException e) {
-                        //TODO
-                        e.printStackTrace();
-                    }
-                    System.out.print(result);
-                } catch (IllegalAccessException e) {
-                    //TODO
-                    e.printStackTrace();
-                }
 
+            } catch (InvocationTargetException e) {
+                //TODO
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                //TODO
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                //TODO
+                e.printStackTrace();
             } catch (InterruptedException e) {
                 try {
                     wait();

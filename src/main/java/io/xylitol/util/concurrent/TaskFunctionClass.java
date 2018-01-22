@@ -5,18 +5,23 @@ package io.xylitol.util.concurrent;
  *
  * @author xuyandong
  */
-public class TaskFunctionClass<T> {
+public class TaskFunctionClass<T, E> {
     private Class clazz;
     private String methodName;
     private final Object[] args;
-
     private TaskInstance<T> taskInstance;
+    private Promise<E> promise;
 
-    public TaskFunctionClass(Class clazz, String methodName, final Object[] args, TaskInstance<T> taskInstance) {
+    public TaskFunctionClass(Class clazz, String methodName, final Object[] args, TaskInstance<T> taskInstance, Promise<E> promise) {
         this.clazz = clazz;
         this.methodName = methodName;
         this.args = args;
         this.taskInstance = taskInstance;
+        this.promise = promise;
+    }
+
+    public void setValue(E result) {
+        this.promise.setSuccess(result);
     }
 
     public Class getClazz() {

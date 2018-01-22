@@ -13,7 +13,7 @@ import static io.xylitol.util.internal.ObjectUtil.checkNotNull;
  *
  * @author xuyandong
  */
-public class DefaultPromise<V> extends AbstractXFuture<V> implements Promise<V> {
+public abstract class DefaultPromise<V> extends AbstractXFuture<V> implements Promise<V> {
 
 
     /**
