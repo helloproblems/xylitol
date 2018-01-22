@@ -15,7 +15,6 @@ import static io.xylitol.util.internal.ObjectUtil.checkNotNull;
  */
 public abstract class DefaultPromise<V> extends AbstractXFuture<V> implements Promise<V> {
 
-
     /**
      * 对result 的原子更新操作
      */
@@ -54,7 +53,7 @@ public abstract class DefaultPromise<V> extends AbstractXFuture<V> implements Pr
     }
 
     @Override
-    public XFuture<V> addListener(GenericXFutureListener<? extends XFuture<? super V>> listener) {
+    public DefaultPromise<V> addListener(GenericXFutureListener<? extends XFuture<? super V>> listener) {
         checkNotNull(listener, "listener");
 
         synchronized (this) {
@@ -69,7 +68,7 @@ public abstract class DefaultPromise<V> extends AbstractXFuture<V> implements Pr
     }
 
     @Override
-    public XFuture<V> addListeners(GenericXFutureListener<? extends XFuture<? super V>>... listeners) {
+    public DefaultPromise<V> addListeners(GenericXFutureListener<? extends XFuture<? super V>>... listeners) {
         checkNotNull(listeners, "listeners");
 
         synchronized (this) {
@@ -90,7 +89,7 @@ public abstract class DefaultPromise<V> extends AbstractXFuture<V> implements Pr
 
 
     @Override
-    public XFuture<V> removeListener(GenericXFutureListener<? extends XFuture<? super V>> listener) {
+    public DefaultPromise<V> removeListener(GenericXFutureListener<? extends XFuture<? super V>> listener) {
         checkNotNull(listener, "listener");
 
         synchronized (this) {
@@ -101,7 +100,7 @@ public abstract class DefaultPromise<V> extends AbstractXFuture<V> implements Pr
     }
 
     @Override
-    public final XFuture<V> removeListeners(GenericXFutureListener<? extends XFuture<? super V>>... listeners) {
+    public final DefaultPromise<V> removeListeners(GenericXFutureListener<? extends XFuture<? super V>>... listeners) {
         checkNotNull(listeners, "listeners");
 
         synchronized (this) {
