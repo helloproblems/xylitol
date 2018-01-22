@@ -43,8 +43,8 @@ public class TaskQueueHandler extends AbstractTaskHandler {
             try {
                 taskContext = taskBlockingQueue.take();
                 method = getMethod(taskContext);
-                //TODO
                 result = method.invoke(taskContext.getClazz().newInstance(), taskContext.getArgs());
+                //TODO 方法返回值 future的泛型 需要对应  目前没找到方法
                 if (classTypeEquals(result.getClass(), method.getReturnType())) {
                     taskContext.setSuccess(result);
                 } else {
