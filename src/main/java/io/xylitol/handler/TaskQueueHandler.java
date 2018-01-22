@@ -49,7 +49,6 @@ public class TaskQueueHandler implements TaskHandler {
                     taskContext.setSuccess(result);
                 } else {
                     exceptionCaught(taskContext, new ReturnTypeInconsistentException().getCause());
-                    throw new ReturnTypeInconsistentException();
                 }
 
             } catch (InstantiationException e) {
@@ -74,6 +73,7 @@ public class TaskQueueHandler implements TaskHandler {
 
     @Override
     public void exceptionCaught(TaskContext ctx, Throwable cause) throws Exception {
+
 
     }
 
