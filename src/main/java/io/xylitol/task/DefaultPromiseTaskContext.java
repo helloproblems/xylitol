@@ -13,25 +13,32 @@ import io.xylitol.util.concurrent.XFuture;
 public class DefaultPromiseTaskContext<V> implements Task, TaskContext<V> {
 
     private final TaskId id;
-    private Promise<V> promise;
+    private Promise<V> promise = null;
     private final Class clazz;
     private final String methodName;
     private final Object[] args;
 
-    public DefaultPromiseTaskContext(Promise<V> promise, Class clazz, String methodName, Object[] args) {
-        this.promise = promise;
+    public DefaultPromiseTaskContext(Class clazz, String methodName, Object[] args) {
         this.id = newId();
         this.clazz = clazz;
         this.methodName = methodName;
         this.args = args;
     }
 
-    public DefaultPromiseTaskContext(TaskId id, Promise<V> promise, Class clazz, String methodName, Object[] args) {
+    public DefaultPromiseTaskContext(Class clazz, String methodName, Object[] args, Promise<V> promise) {
+        this.id = newId();
+        this.clazz = clazz;
+        this.methodName = methodName;
+        this.args = args;
         this.promise = promise;
+    }
+
+    public DefaultPromiseTaskContext(TaskId id, Class clazz, String methodName, Object[] args, Promise<V> promise) {
         this.id = id;
         this.clazz = clazz;
         this.methodName = methodName;
         this.args = args;
+        this.promise = promise;
     }
 
     @Override
@@ -57,26 +64,30 @@ public class DefaultPromiseTaskContext<V> implements Task, TaskContext<V> {
     }
 
     public XFuture<V> setSuccess(V result) {
-        promise.setSuccess(result);
+        if (promise != null) {
+            promise.setSuccess(result);
+        }
         return promise;
 
     }
 
 
     public boolean trySuccess(V result) {
-        return promise.trySuccess(result);
+        return promise != null && promise.trySuccess(result);
 
     }
 
 
     public XFuture<V> setFailure(Throwable cause) {
-        promise.setFailure(cause);
+        if (promise != null) {
+            promise.setFailure(cause);
+        }
         return promise;
     }
 
 
     public boolean tryFailure(Throwable cause) {
-        return promise.tryFailure(cause);
+        return promise != null && promise.tryFailure(cause);
     }
 
 }
