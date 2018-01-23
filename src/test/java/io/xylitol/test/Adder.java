@@ -6,10 +6,6 @@ import io.xylitol.task.DefaultPromiseTaskContext;
 import io.xylitol.task.TaskContext;
 import io.xylitol.util.concurrent.DefaultPromise;
 import io.xylitol.util.concurrent.Promise;
-import io.xylitol.util.internal.TypeString;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 /**
  * Created on 2018/1/19.
@@ -19,10 +15,8 @@ import java.lang.reflect.Type;
 public class Adder {
     public static void main(String[] args) throws Exception {
         Promise<Integer> futureTest_1 = new AdditionTestFuture().addListener(future -> System.out.println("hello I'm the add int " + future.get()));
-        DefaultPromise futureTest_2 = new DefaultPromise<Long>() {
-
+        DefaultPromise<Long> futureTest_2 = new DefaultPromise<Long>() {
         }.addListener(future -> System.out.println("hello I'm the add long " + future.get()));
-
         Promise<Integer> futureTest_3 = new AdditionTestFuture().addListener(future -> System.out.println("hello I'm the multiply " + future.get()));
 
 
