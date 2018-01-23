@@ -48,7 +48,7 @@ public class DefaultPromiseTaskContext<V> implements Task<V>, TaskContext<V> {
 
     @Override
     public boolean resultCheck(V result) {
-        return result != null && result.getClass().toString().equals(promise.typeArgumentString());
+        return result != null && result.getClass() == promise.typeArgClazz();
     }
 
 

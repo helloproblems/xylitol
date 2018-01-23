@@ -38,8 +38,8 @@ public abstract class DefaultPromise<V> extends AbstractXFuture<V> implements Pr
     private final Type typeArg;
 
     @Override
-    public String typeArgumentString() {
-        return typeArg.toString();
+    public Class typeArgClazz() {
+        return (Class) typeArg;
     }
 
 

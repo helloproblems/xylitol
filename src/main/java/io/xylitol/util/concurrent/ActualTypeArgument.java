@@ -5,7 +5,7 @@ package io.xylitol.util.concurrent;
  *
  * @author xuyandong
  */
-public interface ActualTypeArgument<V> {
+public interface ActualTypeArgument {
 
-    String typeArgumentString();
+    Class typeArgClazz();
 }
