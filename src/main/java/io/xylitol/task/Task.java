@@ -5,10 +5,13 @@ package io.xylitol.task;
  *
  * @author xuyandong
  */
-public interface Task {
+public interface Task<V> {
+
     /**
      * 返回 TaskId
      */
     TaskId id();
+
+    boolean resultCheck(V result);
 
 }

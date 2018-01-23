@@ -20,4 +20,6 @@ public class AdditionTestFuture extends DefaultPromise<Integer> {
     public Promise<Integer> setFailure(Throwable cause) {
         return super.setFailure(cause);
     }
+
+
 }

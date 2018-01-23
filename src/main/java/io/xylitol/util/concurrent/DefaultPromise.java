@@ -1,5 +1,7 @@
 package io.xylitol.util.concurrent;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
@@ -33,6 +35,17 @@ public abstract class DefaultPromise<V> extends AbstractXFuture<V> implements Pr
      */
     private boolean notifyingListeners;
 
+    private final Type typeArg;
+
+    @Override
+    public String typeArgumentString() {
+        return typeArg.toString();
+    }
+
+
+    public DefaultPromise() {
+        this.typeArg = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
 
     @Override
     public boolean isSuccess() {

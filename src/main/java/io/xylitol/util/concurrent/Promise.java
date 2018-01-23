@@ -7,7 +7,7 @@ package io.xylitol.util.concurrent;
  *
  * @author xuyandong
  */
-public interface Promise<V> extends XFuture<V>, Valid<V> {
+public interface Promise<V> extends XFuture<V>, Valid<V>, ActualTypeArgument<V> {
 
     Promise<V> setSuccess(V result);
 

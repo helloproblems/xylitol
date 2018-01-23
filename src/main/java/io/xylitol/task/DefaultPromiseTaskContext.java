@@ -10,7 +10,7 @@ import io.xylitol.util.concurrent.XFuture;
  *
  * @author xuyandong
  */
-public class DefaultPromiseTaskContext<V> implements Task, TaskContext<V> {
+public class DefaultPromiseTaskContext<V> implements Task<V>, TaskContext<V> {
 
     private final TaskId id;
     private Promise<V> promise = null;
@@ -46,6 +46,11 @@ public class DefaultPromiseTaskContext<V> implements Task, TaskContext<V> {
         return id;
     }
 
+    @Override
+    public boolean resultCheck(V result) {
+        return result != null && result.getClass().toString().equals(promise.typeArgumentString());
+    }
+
 
     public Class getClazz() {
         return clazz;
@@ -63,9 +68,20 @@ public class DefaultPromiseTaskContext<V> implements Task, TaskContext<V> {
         return DefaultTaskId.newInstance();
     }
 
+    private void setValue0(V result) {
+
+    }
+
+    //TODO
     public XFuture<V> setSuccess(V result) {
         if (promise != null) {
-            promise.setSuccess(result);
+            if (resultCheck(result)) {
+                promise.setSuccess(result);
+            } else {
+                throw new ClassCastException("异常:生成的结果与future接收的结果不是同一种类型");
+            }
+
+
         }
         return promise;
 
@@ -73,7 +89,12 @@ public class DefaultPromiseTaskContext<V> implements Task, TaskContext<V> {
 
 
     public boolean trySuccess(V result) {
-        return promise != null && promise.trySuccess(result);
+
+        if (resultCheck(result)) {
+            return promise != null && promise.trySuccess(result);
+        } else {
+            throw new ClassCastException("异常:生成的结果与future接收的结果不是同一种类型");
+        }
 
     }
 
