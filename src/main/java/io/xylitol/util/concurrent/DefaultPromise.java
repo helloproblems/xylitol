@@ -155,13 +155,14 @@ public abstract class DefaultPromise<V> extends AbstractXFuture<V> implements Pr
                 try {
                     wait();
                 } catch (InterruptedException e) {
-                    // 等待的时候线程中断了
+                    // 等待的时候线程中断了，记录中断状态
                     interrupted = true;
                 } finally {
                     decWaiters();
                 }
             }
         }
+        //从中断中恢复
         if (interrupted) {
             Thread.currentThread().interrupt();
         }
