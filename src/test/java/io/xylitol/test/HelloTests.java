@@ -46,4 +46,9 @@ public class HelloTests {
 
     }
 
+    @Test
+    public void singletonTest(){
+        SingletonDemo.INSTANCE.otherMethods().otherMethods().otherMethods();
+    }
+
 }
